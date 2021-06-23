@@ -2,11 +2,9 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ShowCommand extends Command<Integer> implements Serializable {
     public ShowCommand(Argument<Integer> argument) {
@@ -14,13 +12,12 @@ public class ShowCommand extends Command<Integer> implements Serializable {
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
-            if (dbInteraction.isEmpty())
+            if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is empty. Nothing to show.");
             else
-                this.setMessage(dbInteraction.readCollection());
-
+                this.setMessage(dbInteractionCommands.readCollection());
         } catch (Exception ex) {
             this.setMessage(ex.getMessage());
         }

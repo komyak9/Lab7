@@ -3,7 +3,6 @@ package commands;
 import arguments.Argument;
 import content.Position;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,12 +15,15 @@ public class RemoveAllByPositionCommand extends Command<Position> implements Ser
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
+            checkAuthorization(user.isAuthorized());
+
+            dbInteractionCommands.removePosition(argument.getArgument());
+
             if (collection.stream().noneMatch(worker -> worker.getPosition().equals(argument.getArgument())))
                 throw new Exception("There is no worker with such position. Nothing to remove.");
 
-            dbInteraction.removePosition(argument.getArgument());
             Collection<?> toRemove = collection.stream().filter(worker -> worker.getPosition() == argument.
                     getArgument()).collect(Collectors.toList());
             collection.removeAll(toRemove);

@@ -2,7 +2,6 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,12 +14,14 @@ public class RemoveGreaterCommand extends Command<Worker> implements Serializabl
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
+            checkAuthorization(user.isAuthorized());
+
             if (collection.stream().noneMatch(worker -> argument.getArgument().compareTo(worker) < 0))
                 throw new Exception("There is no workers greater. Nothing to remove.");
 
-            dbInteraction.removeGreater(argument.getArgument().getName());
+            dbInteractionCommands.removeGreater(argument.getArgument().getName());
             Collection<?> toRemove = collection.stream().filter(workerToUpdate -> workerToUpdate.compareTo(argument.getArgument()) > 0).collect(Collectors.toList());
             collection.removeAll(toRemove);
             idGenerator.clear();   //////////////////////////////////////////////////////

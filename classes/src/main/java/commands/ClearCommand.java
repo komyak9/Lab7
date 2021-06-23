@@ -2,7 +2,6 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -13,12 +12,14 @@ public class ClearCommand extends Command<Integer> implements Serializable {
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
-            if (dbInteraction.isEmpty())
+            checkAuthorization(user.isAuthorized());
+
+            if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is already empty. Nothing to clear.");
-            else{
-                dbInteraction.clear();
+            else {
+                dbInteractionCommands.clear();
                 collection.clear();
             }
             //getIdGenerator().getIdSet().clear();

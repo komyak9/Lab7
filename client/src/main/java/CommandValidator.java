@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class CommandValidator {
-    LinkedList<String> filesList = new LinkedList<>();
     private final ReadCommands readCommands = new ReadCommands(this);
+    LinkedList<String> filesList = new LinkedList<>();
 
     public Command<?> validateData(String line, Scanner scanner) {
         String[] input = line.trim().split(" ", 2);
@@ -74,7 +74,7 @@ public class CommandValidator {
                     throw new Exception("There is no such command.");
             }
         } catch (Exception ex) {
-            App.logger.error(ex.getMessage());
+            AppClient.logger.error(ex.getMessage());
         }
         return command;
     }

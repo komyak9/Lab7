@@ -3,7 +3,6 @@ package commands;
 import arguments.Argument;
 import arguments.IdArgument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,8 +15,25 @@ public class UpdateIdCommand extends Command<Integer> implements Serializable {
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
+            checkAuthorization(user.isAuthorized());
+
+            dbInteractionCommands.updateElement(0, ((IdArgument) argument).getElement().getArgument().getName(),
+                    (int) ((IdArgument) argument).getElement().getArgument().getCoordinates().getX(),
+                    ((IdArgument) argument).getElement().getArgument().getCoordinates().getY(),
+                    ((IdArgument) argument).getElement().getArgument().getCreationDate(),
+                    ((IdArgument) argument).getElement().getArgument().getSalary(),
+                    ((IdArgument) argument).getElement().getArgument().getStartDate(),
+                    ((IdArgument) argument).getElement().getArgument().getEndDate(),
+                    ((IdArgument) argument).getElement().getArgument().getPosition(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getAnnualTurnover(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getType(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getOfficialAddress().getZipCode(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getOfficialAddress().getTown().getX(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getOfficialAddress().getTown().getY(),
+                    ((IdArgument) argument).getElement().getArgument().getOrganization().getOfficialAddress().getTown().getName());
+
             if (collection.stream().noneMatch(worker -> worker.getId() == argument.getArgument()))
                 throw new Exception("There is no worker with such id. Nothing to remove.");
 

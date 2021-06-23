@@ -2,7 +2,6 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class HelpCommand extends Command<Integer> implements Serializable {
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         StringBuilder message = new StringBuilder("Available commands: ");
         String[] keys = commands.keySet().toArray(new String[0]);
         for (int i = 0; i < commands.size(); i++) {

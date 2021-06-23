@@ -1,8 +1,7 @@
-import commands.Command;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -20,11 +19,11 @@ public class Client {
         boolean toContinue = true;
         long start = System.currentTimeMillis();
         while (scanning && toContinue) {
-            if (System.currentTimeMillis() - start >= 100000){
+            if (System.currentTimeMillis() - start >= 100000) {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Do you want to continue waiting? \"no\" for no, anything for yes");
                 String decision = sc.nextLine();
-                if (decision.equals("no")){
+                if (decision.equals("no")) {
                     toContinue = false;
                     return toContinue;
                 }
@@ -38,20 +37,20 @@ public class Client {
                 out = socket.getOutputStream();
                 in = socket.getInputStream();
             } catch (Exception e) {
-                App.logger.warn("Connection with the server is failed, waiting and trying again...");
+                AppClient.logger.warn("Connection with the server is failed, waiting and trying again...");
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException ie) {
-                    App.logger.warn(ie.getMessage());
+                    AppClient.logger.warn(ie.getMessage());
                 }
             }
         }
         return true;
     }
 
-    public static void sendData(Command<?> command) throws IOException {
+    public static void sendData(Object object) throws IOException {
         if (!socket.isOutputShutdown())
-            out.write(new Serializer().serialize(command));
+            out.write(new Serializer().serialize((Serializable) object));
         out.flush();
         System.out.println("Data to the server was successfully sent.");
     }

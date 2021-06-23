@@ -2,7 +2,6 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import db.DBInteraction;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -13,8 +12,10 @@ public class InfoCommand extends Command<Integer> implements Serializable {
     }
 
     @Override
-    public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction) {
+    public void execute(LinkedList<Worker> collection) {
         try {
+            checkAuthorization(user.isAuthorized());
+
             String message = "Type of the collection: LinkedList\n";
             message += "Number of elements: " + collection.size();
             this.setMessage(message);

@@ -3,20 +3,25 @@ package commands;
 import arguments.Argument;
 import content.Worker;
 import creation.IdGenerator;
-import db.DBInteraction;
+import db.DBInteractionCommands;
+import db.User;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.LinkedList;
 
 abstract public class Command<T> implements Serializable {
+    public User user = null;
     protected Argument<T> argument;
     protected String message = null;
-    protected IdGenerator idGenerator = null;
+    protected IdGenerator idGenerator = null;  /////////////////////////////////////////////////////
+    protected DBInteractionCommands dbInteractionCommands = new DBInteractionCommands();
+
     public Command(Argument<T> argument) {
         this.argument = argument;
     }
 
-    abstract public void execute(LinkedList<Worker> collection, DBInteraction dbInteraction);
+    abstract public void execute(LinkedList<Worker> collection);
 
     public IdGenerator getIdGenerator() {
         return idGenerator;
@@ -40,6 +45,24 @@ abstract public class Command<T> implements Serializable {
 
     public void setArgument(Argument<T> argument) {
         this.argument = argument;
+    }
+
+    protected void checkAuthorization(boolean isAuthorized) throws Exception {
+        if (!isAuthorized)
+            throw new Exception("Sorry, to execute this command you must log in or register.");
+    }
+
+    public void setDbInteractionCommands(Connection connection, String userName) {
+        dbInteractionCommands.setConnection(connection);
+        dbInteractionCommands.setCreatorName(userName);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

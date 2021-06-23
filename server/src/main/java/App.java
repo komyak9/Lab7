@@ -1,24 +1,17 @@
-import db.DBInteraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 public class App {
     public static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
-        boolean isAuthorized = true;
         DBInteraction dbInteraction = new DBInteraction("jdbc:postgresql://localhost:5432/postgres",
                 "postgres", "labpass");
 
-        if (args.length == 2)
-            isAuthorized = dbInteraction.authorization(args[0], args[1]);
-        else
-            isAuthorized = dbInteraction.register();
-
         CollectionManager collectionManager = new CollectionManager(dbInteraction);
 
-
-        /*
         try {
             final int PORT = 3175;
             Server.run(PORT);
@@ -35,7 +28,7 @@ public class App {
                 try {
                     toContinue = Server.processRequest(collectionManager, start);
                 } catch (IOException | ClassNotFoundException e) {
-                    logger.warn("Connection is aborted! Trying to reconnect...");
+                    logger.warn(e.getMessage() + "\nConnection is aborted! Trying to reconnect...");
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException ie) {
@@ -50,7 +43,6 @@ public class App {
                 System.out.println(e.getMessage());
             }
         }
-        */
     }
 
     /*

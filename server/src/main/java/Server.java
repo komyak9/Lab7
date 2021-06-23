@@ -61,8 +61,6 @@ public class Server {
                         socketChannel.read(buffer);
                         buffer.flip();
                         command = (Command<?>) (new Serializer().deserialize(buffer.array()));
-
-
                         String result = collectionManager.execute(command);
                         System.out.println("A string to send: " + result);
                         socketChannel.write(ByteBuffer.wrap(result.getBytes()));
