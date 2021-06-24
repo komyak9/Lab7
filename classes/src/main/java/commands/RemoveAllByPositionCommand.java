@@ -18,18 +18,17 @@ public class RemoveAllByPositionCommand extends Command<Position> implements Ser
     public void execute(LinkedList<Worker> collection) {
         try {
             checkAuthorization(user.isAuthorized());
+            int count_before = collection.size();
+            //if (collection.stream().noneMatch(worker -> worker.getPosition().equals(argument.getArgument())))
+            //    throw new Exception("There is no worker with such position. Nothing to remove.");
 
             dbInteractionCommands.removePosition(argument.getArgument());
-
-            if (collection.stream().noneMatch(worker -> worker.getPosition().equals(argument.getArgument())))
-                throw new Exception("There is no worker with such position. Nothing to remove.");
-
-            Collection<?> toRemove = collection.stream().filter(worker -> worker.getPosition() == argument.
-                    getArgument()).collect(Collectors.toList());
-            collection.removeAll(toRemove);
-            idGenerator.clear();
-            collection.forEach(worker -> idGenerator.addId(worker.getId()));
-            this.setMessage("The elements are removed.");
+            dbInteractionCommands.updateCollection(collection);
+            int count_after = collection.size();
+            if (count_after < count_before)
+                this.setMessage("The elements are removed.");
+            else
+                this.setMessage("There is no worker with such salary. Nothing to remove.");
         } catch (Exception e) {
             this.setMessage(e.getMessage());
         }

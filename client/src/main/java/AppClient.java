@@ -27,7 +27,7 @@ public class AppClient {
                 try {
                     toContinue = consoleManager.communicate(host, port, registrar.getUser());
                 } catch (Exception e) {
-                    logger.error(e.getMessage() + "\nConnection is aborted! Trying to reconnect...");
+                    logger.warn(e.getMessage() + "\nConnection is aborted! Trying to reconnect...");
                     try {
                         Client.getOut().flush();
                         toContinue = Client.connect(host, port);

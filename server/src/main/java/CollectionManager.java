@@ -1,7 +1,6 @@
 import commands.Command;
 import content.*;
 import creation.FieldsWrapper;
-import creation.IdGenerator;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,10 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class CollectionManager {
-    private final IdGenerator idGenerator = new IdGenerator();  /////////////////////////////////////
     private final DBInteraction dbInteraction;
     private final LinkedList<Worker> workersList;
-    private String creatorName = null;
 
     public CollectionManager(DBInteraction dbInteraction) {
         this.dbInteraction = dbInteraction;
@@ -24,9 +21,7 @@ public class CollectionManager {
     }
 
     public String execute(Command<?> command) {
-        command.setIdGenerator(idGenerator);  ////////////////////////////////////////////////////////
-        command.setDbInteractionCommands(dbInteraction.getConnection(), creatorName);
-        System.out.println(creatorName);
+        command.setDbInteractionCommands(dbInteraction.getConnection(), command.getUser().getUserName());
         String authorizationMessage = dbInteraction.validateUser(command.getUser());
         command.execute(workersList);
         command.setMessage(authorizationMessage + "\n" + command.getMessage());
@@ -38,11 +33,8 @@ public class CollectionManager {
              ResultSet rs = statement.executeQuery("SELECT creator, id, name, coordinatesX, coordinatesY," +
                      "creationDate, salary, startDate, endDate, position, organizationAnnualTurnover," +
                      "organizationType, addressZipCode, locationX, locationY, locationName from WORKERS")) {
-
-            System.out.println("Filling up the collection...");
             FieldsWrapper wrapper = new FieldsWrapper();
             while (rs.next()) {
-                creatorName = rs.getString("creator");
                 wrapper.setId(rs.getInt("id"));
                 wrapper.setWorkerName(rs.getString("name"));
                 wrapper.setCoordinatesX(rs.getInt("coordinatesX"));
@@ -65,7 +57,6 @@ public class CollectionManager {
                 else
                     wrapper.setEndDate(null);
 
-
                 Location location = new Location(wrapper.getLocationX(), wrapper.getLocationY(), wrapper.getLocationName());
                 Address address = new Address(wrapper.getZipCode(), location);
                 Organization organization = new Organization(wrapper.getAnnualTurnover(), wrapper.getOrganizationType(), address);
@@ -76,9 +67,9 @@ public class CollectionManager {
                         coordinates, wrapper.getSalary(), wrapper.getStartDate(), wrapper.getEndDate(),
                         wrapper.getPosition(), organization));
             }
-            System.out.println("Data from the database was successfully downloaded.");
+            App.logger.info("Data from the database was successfully downloaded.");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            App.logger.warn(ex.getMessage());
         }
     }
 

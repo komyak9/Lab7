@@ -14,7 +14,6 @@ abstract public class Command<T> implements Serializable {
     public User user = null;
     protected Argument<T> argument;
     protected String message = null;
-    protected IdGenerator idGenerator = null;  /////////////////////////////////////////////////////
     protected DBInteractionCommands dbInteractionCommands = new DBInteractionCommands();
 
     public Command(Argument<T> argument) {
@@ -22,14 +21,6 @@ abstract public class Command<T> implements Serializable {
     }
 
     abstract public void execute(LinkedList<Worker> collection);
-
-    public IdGenerator getIdGenerator() {
-        return idGenerator;
-    }
-
-    public void setIdGenerator(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
-    }
 
     public String getMessage() {
         return message;

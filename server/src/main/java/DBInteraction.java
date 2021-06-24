@@ -22,11 +22,10 @@ public class DBInteraction {
 
     public void connect() {
         try {
-            System.out.println("Trying to connect the database...");
             connection = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println("You successfully connected to the database!");
+            App.logger.info("You successfully connected to the database.");
         } catch (SQLException e) {
-            System.out.println("Failed to make connection to the database. Try to execute the program again.\n" +
+            App.logger.error("Failed to make connection to the database. Try to execute the program again.\n" +
                     e.getMessage());
             System.exit(0);
         }
@@ -34,10 +33,9 @@ public class DBInteraction {
 
     public void createWorkerTable() {
         try {
-            if (!checkTableExistence("workers")) {
-                System.out.println("Trying to create the table for data...");
+            if (tableDoesntExist("workers")) {
                 statement = connection.createStatement();
-                String sql = "CREATE TABLE WORKERS" +
+                statement.executeUpdate("CREATE TABLE WORKERS" +
                         "(creator VARCHAR(255), " +
                         "id INTEGER not NULL, " +
                         "name VARCHAR(255), " +
@@ -53,11 +51,13 @@ public class DBInteraction {
                         "addressZipCode VARCHAR(255), " +
                         "locationX INTEGER not NULL, " +
                         "locationY INTEGER not NULL, " +
-                        "locationName VARCHAR(255))";
-                statement.executeUpdate(sql);
+                        "locationName VARCHAR(255))");
                 statement.close();
-                System.out.println("The table created successfully!");
+                App.logger.info("The table WORKERS created successfully.");
             }
+            //statement = connection.createStatement();
+            //statement.executeUpdate("CREATE SEQUENCE idGenerator START 0");
+            //statement.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -65,46 +65,35 @@ public class DBInteraction {
 
     public void createUserTable() {
         try {
-            if (!checkTableExistence("users")) {
-                System.out.println("Trying to create the table for users...");
+            if (tableDoesntExist("users")) {
                 statement = connection.createStatement();
-                String sql = "CREATE TABLE USERS" +
-                        "(logins VARCHAR(255), " +
-                        "passwords VARCHAR(255))";
-                statement.executeUpdate(sql);
+                statement.executeUpdate("CREATE TABLE USERS" + "(logins VARCHAR(255), " + "passwords VARCHAR(255))");
                 statement.close();
-                System.out.println("The table created successfully!");
+                App.logger.info("The table USERS created successfully.");
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            App.logger.error(ex.getMessage());
         }
     }
 
-    public boolean checkTableExistence(String tableName) {
+    public boolean tableDoesntExist(String tableName) {
         try {
             DatabaseMetaData meta = connection.getMetaData();
-            ResultSet rs = meta.getTables(null, null, tableName,
-                    new String[]{"TABLE"});
-            System.out.println("Checking existence of the " + tableName.toUpperCase() + " table...");
-
+            ResultSet rs = meta.getTables(null, null, tableName, new String[]{"TABLE"});
             while (rs.next()) {
-                if (rs.getString("TABLE_NAME").equals(tableName)) {
-                    System.out.println("The " + tableName.toUpperCase() + " table exists.");
-                    return true;
-                }
+                if (rs.getString("TABLE_NAME").equals(tableName))
+                    return false;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            App.logger.error(ex.getMessage());
         }
-        return false;
+        return true;
     }
 
     public String validateUser(User user) {
         String result = "Sorry, there is no such user. Please, register.";
-
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery("SELECT logins, passwords from USERS")) {
-
             if (user.isOldUser()) {
                 while (rs.next() && !user.isAuthorized()) {
                     if (user.getUserName().equals(rs.getString("logins"))) {
@@ -122,14 +111,14 @@ public class DBInteraction {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            App.logger.warn(ex.getMessage());
         }
         return result;
     }
 
     public void removeTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DROP TABLE WORKERS");
+            statement.executeUpdate("DROP TABLE USERS");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -156,7 +145,7 @@ public class DBInteraction {
                 result = "Sorry, such user has already exists.";
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            App.logger.warn(ex.getMessage());
         }
         return result;
     }

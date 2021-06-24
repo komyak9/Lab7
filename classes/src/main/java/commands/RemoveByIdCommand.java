@@ -17,19 +17,17 @@ public class RemoveByIdCommand extends Command<Integer> implements Serializable 
     public void execute(LinkedList<Worker> collection) {
         try {
             checkAuthorization(user.isAuthorized());
-
-            dbInteractionCommands.removeId(argument.getArgument());
-
-            for (Worker worker : collection)
-                System.out.println(worker);
-
+            int count_before = collection.size();
             if (collection.stream().noneMatch(worker -> worker.getId() == argument.getArgument()))
                 throw new Exception("There is no worker with such id. Nothing to remove.");
 
-            Collection<?> toRemove = collection.stream().filter(workerToUpdate -> workerToUpdate.getId() == argument.getArgument()).collect(Collectors.toList());
-            collection.removeAll(toRemove);
-            idGenerator.remove(argument.getArgument());
-            this.setMessage("The elements are removed.");
+            dbInteractionCommands.removeId(argument.getArgument());
+            dbInteractionCommands.updateCollection(collection);
+            int count_after = collection.size();
+            if (count_after < count_before)
+                this.setMessage("The elements are removed.");
+            else
+                this.setMessage("There is no worker with such id. Nothing to remove.");
         } catch (Exception e) {
             this.setMessage(e.getMessage());
         }

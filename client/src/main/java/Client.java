@@ -33,7 +33,7 @@ public class Client {
             try {
                 socket = new Socket(host, port);
                 scanning = false;
-                System.out.println("Connection with the server is established!");
+                AppClient.logger.info("Connection with the server is established!");
                 out = socket.getOutputStream();
                 in = socket.getInputStream();
             } catch (Exception e) {
@@ -52,7 +52,7 @@ public class Client {
         if (!socket.isOutputShutdown())
             out.write(new Serializer().serialize((Serializable) object));
         out.flush();
-        System.out.println("Data to the server was successfully sent.");
+        AppClient.logger.info("Data to the server was successfully sent.");
     }
 
     public static String receiveData() throws IOException, ClassNotFoundException {

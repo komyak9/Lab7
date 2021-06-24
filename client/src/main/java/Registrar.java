@@ -14,14 +14,16 @@ public class Registrar {
             throw new Exception("You canceled authorization. Program's execution will be finished.");
     }
 
-    public Registrar(String userName, String password) {
+    public Registrar(String userName, String password) throws Exception {
         System.out.print("Do you want to log in or to register with your username and password? \"register\" for " +
                 "register and \"log in\" for log in: ");
         String decision = sc.nextLine();
         if (decision.equals("log in"))
             user = new User(userName, password, true);
-        if (decision.equals("register"))
+        else if (decision.equals("register"))
             user = new User(userName, password, false);
+        else
+            throw new Exception("You canceled authorization. Program's execution will be finished.");
     }
 
     public void register() throws Exception {

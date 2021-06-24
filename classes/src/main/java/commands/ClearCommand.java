@@ -18,11 +18,10 @@ public class ClearCommand extends Command<Integer> implements Serializable {
 
             if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is already empty. Nothing to clear.");
-            else {
+            else
                 dbInteractionCommands.clear();
-                collection.clear();
-            }
-            //getIdGenerator().getIdSet().clear();
+
+            dbInteractionCommands.updateCollection(collection);
             this.setMessage("Collection cleared. It's empty now.");
         } catch (Exception ex) {
             this.setMessage(ex.getMessage());

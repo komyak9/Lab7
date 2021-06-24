@@ -41,11 +41,4 @@ public class HelpCommand extends Command<Integer> implements Serializable {
         }
         this.setMessage(message.toString());
     }
-
-    @Override
-    public String toString() {
-        return "commands.HelpCommand{" +
-                "commands=" + commands +
-                '}';
-    }
 }

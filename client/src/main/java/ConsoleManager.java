@@ -23,7 +23,7 @@ public class ConsoleManager {
                 }
             } while ((command = commandValidator.validateData(scanner.nextLine(), scanner)) == null);
         } catch (Exception e) {
-            AppClient.logger.warn(e.getMessage());
+            AppClient.logger.error(e.getMessage());
         }
         return command;
     }
@@ -38,7 +38,7 @@ public class ConsoleManager {
                 return false;
 
             Client.sendData(command);
-            System.out.println("Server's response:\n" + Client.receiveData());
+            AppClient.logger.info("Server's response:\n" + Client.receiveData());
             if (!command.getUser().isOldUser())
                 command.getUser().setOldUser(true);
         }

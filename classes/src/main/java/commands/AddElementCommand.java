@@ -15,8 +15,7 @@ public class AddElementCommand extends Command<Worker> implements Serializable {
     public void execute(LinkedList<Worker> collection) {
         try {
             checkAuthorization(user.isAuthorized());
-
-            dbInteractionCommands.addElement(dbInteractionCommands.getCreatorName(), 0, argument.getArgument().getName(),
+            dbInteractionCommands.addElement(dbInteractionCommands.getCreatorName(), argument.getArgument().getName(),
                     (int) argument.getArgument().getCoordinates().getX(), argument.getArgument().getCoordinates().getY(),
                     argument.getArgument().getCreationDate(), argument.getArgument().getSalary(),
                     argument.getArgument().getStartDate(), argument.getArgument().getEndDate(),
@@ -27,13 +26,7 @@ public class AddElementCommand extends Command<Worker> implements Serializable {
                     argument.getArgument().getOrganization().getOfficialAddress().getTown().getY(),
                     argument.getArgument().getOrganization().getOfficialAddress().getTown().getName());
 
-            Worker worker = new Worker(idGenerator.generateId(), argument.getArgument().getCreationDate(),
-                    argument.getArgument().getName(), argument.getArgument().getCoordinates(),
-                    argument.getArgument().getSalary(), argument.getArgument().getStartDate(),
-                    argument.getArgument().getEndDate(), argument.getArgument().getPosition(),
-                    argument.getArgument().getOrganization());
-            collection.add(worker);
-
+            dbInteractionCommands.updateCollection(collection);
             this.setMessage("New worker was successfully added to the collection.");
         } catch (Exception ex) {
             this.setMessage(ex.getMessage() + "\n New element wasn't added.");
