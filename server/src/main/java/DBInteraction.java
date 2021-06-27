@@ -23,9 +23,9 @@ public class DBInteraction {
     public void connect() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASS);
-            App.logger.info("You successfully connected to the database.");
+            Server.logger.info("You successfully connected to the database.");
         } catch (SQLException e) {
-            App.logger.error("Failed to make connection to the database. Try to execute the program again.\n" +
+            Server.logger.error("Failed to make connection to the database. Try to execute the program again.\n" +
                     e.getMessage());
             System.exit(0);
         }
@@ -53,7 +53,7 @@ public class DBInteraction {
                         "locationY INTEGER not NULL, " +
                         "locationName VARCHAR(255))");
                 statement.close();
-                App.logger.info("The table WORKERS created successfully.");
+                Server.logger.info("The table WORKERS created successfully.");
             }
             //statement = connection.createStatement();
             //statement.executeUpdate("CREATE SEQUENCE idGenerator START 0");
@@ -69,10 +69,10 @@ public class DBInteraction {
                 statement = connection.createStatement();
                 statement.executeUpdate("CREATE TABLE USERS" + "(logins VARCHAR(255), " + "passwords VARCHAR(255))");
                 statement.close();
-                App.logger.info("The table USERS created successfully.");
+                Server.logger.info("The table USERS created successfully.");
             }
         } catch (Exception ex) {
-            App.logger.error(ex.getMessage());
+            Server.logger.error(ex.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class DBInteraction {
                     return false;
             }
         } catch (SQLException ex) {
-            App.logger.error(ex.getMessage());
+            Server.logger.error(ex.getMessage());
         }
         return true;
     }
@@ -111,7 +111,7 @@ public class DBInteraction {
             }
 
         } catch (SQLException ex) {
-            App.logger.warn(ex.getMessage());
+            Server.logger.warn(ex.getMessage());
         }
         return result;
     }
@@ -145,7 +145,7 @@ public class DBInteraction {
                 result = "Sorry, such user has already exists.";
 
         } catch (SQLException ex) {
-            App.logger.warn(ex.getMessage());
+            Server.logger.warn(ex.getMessage());
         }
         return result;
     }

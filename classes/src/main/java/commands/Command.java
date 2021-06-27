@@ -2,13 +2,14 @@ package commands;
 
 import arguments.Argument;
 import content.Worker;
-import creation.IdGenerator;
 import db.DBInteractionCommands;
 import db.User;
 
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 abstract public class Command<T> implements Serializable {
     public User user = null;
@@ -22,7 +23,7 @@ abstract public class Command<T> implements Serializable {
 
     abstract public void execute(LinkedList<Worker> collection);
 
-    public String getMessage() {
+    public synchronized String getMessage() {
         return message;
     }
 

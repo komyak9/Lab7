@@ -4,9 +4,7 @@ import arguments.Argument;
 import content.Worker;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class PrintDescendingCommand extends Command<Integer> implements Serializable {
     public PrintDescendingCommand(Argument<Integer> argument) {
@@ -20,10 +18,10 @@ public class PrintDescendingCommand extends Command<Integer> implements Serializ
             checkAuthorization(user.isAuthorized());
             if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is empty. Nothing to show.");
-            else{
+            else {
                 dbInteractionCommands.updateCollection(collection);
 
-                for(Worker w : collection)
+                for (Worker w : collection)
                     message += "creator: " + dbInteractionCommands.getCreator(w.getId()) + "\t\t" + w;
 
                 ///AtomicReference<String> message = new AtomicReference<>("");

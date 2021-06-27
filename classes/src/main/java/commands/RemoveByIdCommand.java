@@ -4,9 +4,7 @@ import arguments.Argument;
 import content.Worker;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class RemoveByIdCommand extends Command<Integer> implements Serializable {
     public RemoveByIdCommand(Argument<Integer> argument) {

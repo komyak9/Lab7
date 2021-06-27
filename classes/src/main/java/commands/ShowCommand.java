@@ -5,7 +5,6 @@ import content.Worker;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ShowCommand extends Command<Integer> implements Serializable {
     public ShowCommand(Argument<Integer> argument) {
@@ -17,9 +16,9 @@ public class ShowCommand extends Command<Integer> implements Serializable {
         try {
             if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is empty. Nothing to show.");
-            else{
+            else {
                 dbInteractionCommands.updateCollection(collection);
-                for(Worker w : collection)
+                for (Worker w : collection)
                     message += "creator: " + dbInteractionCommands.getCreator(w.getId()) + "\t\t" + w;
 
                 //AtomicReference<String> message = new AtomicReference<>("");

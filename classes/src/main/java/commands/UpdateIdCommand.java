@@ -5,9 +5,7 @@ import arguments.IdArgument;
 import content.Worker;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class UpdateIdCommand extends Command<Integer> implements Serializable {
     public UpdateIdCommand(Argument<Integer> argument) {

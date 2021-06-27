@@ -10,9 +10,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
-public class CollectionManager {
+public class CollectionManager{
     private final DBInteraction dbInteraction;
     private final LinkedList<Worker> workersList;
+    private Command<?> command;
 
     public CollectionManager(DBInteraction dbInteraction) {
         this.dbInteraction = dbInteraction;
@@ -20,12 +21,12 @@ public class CollectionManager {
         fillCollection();
     }
 
-    public String execute(Command<?> command) {
+    public synchronized void execute(Command<?> command) {
         command.setDbInteractionCommands(dbInteraction.getConnection(), command.getUser().getUserName());
         String authorizationMessage = dbInteraction.validateUser(command.getUser());
         command.execute(workersList);
         command.setMessage(authorizationMessage + "\n" + command.getMessage());
-        return command.getMessage();
+        //return command.getMessage();
     }
 
     private void fillCollection() {
@@ -67,13 +68,26 @@ public class CollectionManager {
                         coordinates, wrapper.getSalary(), wrapper.getStartDate(), wrapper.getEndDate(),
                         wrapper.getPosition(), organization));
             }
-            App.logger.info("Data from the database was successfully downloaded.");
+            Server.logger.info("Data from the database was successfully downloaded.");
         } catch (Exception ex) {
-            App.logger.warn(ex.getMessage());
+            Server.logger.warn(ex.getMessage());
         }
     }
 
     public LinkedList<Worker> getWorkersList() {
         return workersList;
+    }
+
+    public void setCommand(Command<?> command) {
+        this.command = command;
+        command.setDbInteractionCommands(dbInteraction.getConnection(), command.getUser().getUserName());
+    }
+
+    public Command<?> getCommand() {
+        return command;
+    }
+
+    public String authorizationUser(){
+        return dbInteraction.validateUser(command.getUser());
     }
 }

@@ -5,9 +5,7 @@ import content.Position;
 import content.Worker;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class RemoveAllByPositionCommand extends Command<Position> implements Serializable {
     public RemoveAllByPositionCommand(Argument<Position> argument) {

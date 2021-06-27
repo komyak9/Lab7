@@ -4,7 +4,6 @@ import arguments.Argument;
 import content.Worker;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.LinkedList;
 
 public class AddIfMinCommand extends Command<Worker> implements Serializable {
