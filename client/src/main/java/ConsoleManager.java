@@ -18,12 +18,12 @@ public class ConsoleManager {
                     if (!scanner.hasNextLine())
                         throw new Exception("There is no line. Program's going to be finished.");
                 } catch (Exception ex) {
-                    AppClient.logger.error(ex.getMessage());
+                    App.logger.error(ex.getMessage());
                     System.exit(0);
                 }
             } while ((command = commandValidator.validateData(scanner.nextLine(), scanner)) == null);
         } catch (Exception e) {
-            AppClient.logger.error(e.getMessage());
+            App.logger.error(e.getMessage());
         }
         return command;
     }
@@ -38,7 +38,7 @@ public class ConsoleManager {
                 return false;
 
             Client.sendData(command);
-            AppClient.logger.info("Server's response:\n" + Client.receiveData());
+            App.logger.info("Server's response:\n" + Client.receiveData());
             if (!command.getUser().isOldUser())
                 command.getUser().setOldUser(true);
         }

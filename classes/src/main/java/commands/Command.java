@@ -8,13 +8,11 @@ import db.User;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.LinkedList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 abstract public class Command<T> implements Serializable {
     public User user = null;
     protected Argument<T> argument;
-    protected String message = null;
+    protected String message = "";
     protected DBInteractionCommands dbInteractionCommands = new DBInteractionCommands();
 
     public Command(Argument<T> argument) {
@@ -55,12 +53,5 @@ abstract public class Command<T> implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "commands.Command{" +
-                "argument=" + argument +
-                '}';
     }
 }

@@ -10,10 +10,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
-public class CollectionManager{
+public class CollectionManager {
     private final DBInteraction dbInteraction;
     private final LinkedList<Worker> workersList;
-    private Command<?> command;
 
     public CollectionManager(DBInteraction dbInteraction) {
         this.dbInteraction = dbInteraction;
@@ -26,7 +25,6 @@ public class CollectionManager{
         String authorizationMessage = dbInteraction.validateUser(command.getUser());
         command.execute(workersList);
         command.setMessage(authorizationMessage + "\n" + command.getMessage());
-        //return command.getMessage();
     }
 
     private void fillCollection() {
@@ -72,22 +70,5 @@ public class CollectionManager{
         } catch (Exception ex) {
             Server.logger.warn(ex.getMessage());
         }
-    }
-
-    public LinkedList<Worker> getWorkersList() {
-        return workersList;
-    }
-
-    public void setCommand(Command<?> command) {
-        this.command = command;
-        command.setDbInteractionCommands(dbInteraction.getConnection(), command.getUser().getUserName());
-    }
-
-    public Command<?> getCommand() {
-        return command;
-    }
-
-    public String authorizationUser(){
-        return dbInteraction.validateUser(command.getUser());
     }
 }

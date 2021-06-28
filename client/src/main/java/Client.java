@@ -33,15 +33,15 @@ public class Client {
             try {
                 socket = new Socket(host, port);
                 scanning = false;
-                AppClient.logger.info("Connection with the server is established!");
+                App.logger.info("Connection with the server is established!");
                 out = socket.getOutputStream();
                 in = socket.getInputStream();
             } catch (Exception e) {
-                AppClient.logger.warn("Connection with the server is failed, waiting and trying again...");
+                App.logger.warn("Connection with the server is failed, waiting and trying again...");
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException ie) {
-                    AppClient.logger.warn(ie.getMessage());
+                    App.logger.warn(ie.getMessage());
                 }
             }
         }
@@ -52,7 +52,7 @@ public class Client {
         if (!socket.isOutputShutdown())
             out.write(new Serializer().serialize((Serializable) object));
         out.flush();
-        AppClient.logger.info("Data to the server was successfully sent.");
+        App.logger.info("Data to the server was successfully sent.");
     }
 
     public static String receiveData() throws IOException, ClassNotFoundException {

@@ -122,7 +122,7 @@ public class Worker implements Comparable<Worker>, Serializable {
 
     @Override
     public String toString() {
-        return "\nid: " + id + "\t\tName: " + name + "\t\tSalary: " + salary + "\t\tStart date: " +
+        return "id: " + id + "\t\tName: " + name + "\t\tSalary: " + salary + "\t\tStart date: " +
                 startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
                 "\t\tEnd date: " + new Formatter().format("%tD", endDate) +
                 "\t\tPosition: " + position + "\t\tOrganization: " + organization.getType() +

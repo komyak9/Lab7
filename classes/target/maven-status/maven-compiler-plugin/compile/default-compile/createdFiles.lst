@@ -3,6 +3,7 @@ commands\ShowCommand.class
 commands\AddIfMaxCommand.class
 content\Worker.class
 commands\RemoveByIdCommand.class
+db\User.class
 commands\AddElementCommand.class
 creation\FieldsWrapper.class
 arguments\ElementArgument.class
@@ -12,6 +13,7 @@ commands\Command.class
 commands\ExitCommand.class
 commands\RemoveGreaterCommand.class
 content\Address.class
+Serializer.class
 content\Position.class
 creation\IdGenerator.class
 arguments\Argument.class
@@ -23,6 +25,7 @@ commands\PrintDescendingCommand.class
 commands\UpdateIdCommand.class
 arguments\PositionArgument.class
 commands\AddIfMinCommand.class
+db\DBInteractionCommands.class
 parser\XMLToObjectParser.class
 content\Coordinates.class
 content\Organization.class

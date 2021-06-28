@@ -4,13 +4,16 @@ C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\AddIfMaxCommand.j
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\creation\ScannerWrapper.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\content\Coordinates.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\arguments\ElementArgument.java
+C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\db\User.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\AddElementCommand.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\Command.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\ExitCommand.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\UpdateIdCommand.java
+C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\Serializer.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\creation\IdGenerator.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\arguments\Argument.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\PrintDescendingCommand.java
+C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\db\DBInteractionCommands.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\parser\WorkerToXMLParser.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\parser\XMLToObjectParser.java
 C:\Users\User\IdeaProjects\Lab7\classes\src\main\java\commands\ClearCommand.java

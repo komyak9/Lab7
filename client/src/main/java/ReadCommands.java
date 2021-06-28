@@ -29,7 +29,7 @@ public class ReadCommands {
                 System.out.println(Client.receiveData());
             }
         } catch (IOException | ClassNotFoundException e) {
-            AppClient.logger.warn(e.getMessage());
+            App.logger.warn(e.getMessage());
         }
     }
 
@@ -39,7 +39,7 @@ public class ReadCommands {
             if (!file.exists())
                 throw new NoSuchFileException("Sorry," + fileName + " file doesn't exist.");
         } catch (NoSuchFileException e) {
-            AppClient.logger.error(e.getMessage());
+            App.logger.error(e.getMessage());
         }
     }
 }

@@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DBInteractionCommands implements Serializable {
     Connection connection = null;
     private String creatorName;
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     public void setConnection(Connection connection) {
         this.connection = connection;

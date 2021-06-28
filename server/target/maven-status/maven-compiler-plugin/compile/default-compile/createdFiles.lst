@@ -1,6 +1,7 @@
-App.class
 DBInteraction.class
-Server.class
-Serializer.class
-Save.class
+SendHandler.class
 CollectionManager.class
+Server.class
+Encoder.class
+TaskHandler.class
+ConnectionHandler.class

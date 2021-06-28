@@ -74,7 +74,7 @@ public class CommandValidator {
                     throw new Exception("There is no such command.");
             }
         } catch (Exception ex) {
-            AppClient.logger.error(ex.getMessage());
+            App.logger.error(ex.getMessage());
         }
         return command;
     }
