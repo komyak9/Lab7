@@ -18,6 +18,7 @@ public class DBInteraction {
         connect();
         createWorkerTable();
         createUserTable();
+        Server.logger.info("Database was initialized.");
     }
 
     public void connect() {
@@ -55,9 +56,15 @@ public class DBInteraction {
                 statement.close();
                 Server.logger.info("The table WORKERS created successfully.");
             }
-            //statement = connection.createStatement();
-            //statement.executeUpdate("CREATE SEQUENCE idGenerator START 0");
-            //statement.close();
+
+            if (sequenceDoesntExist("IDGENR")){
+                statement = connection.createStatement();
+                statement.executeUpdate("CREATE SEQUENCE IDGENR START 1");
+                statement.close();
+                Server.logger.info("The sequence IDGENR created successfully.");
+            }
+            else
+                System.out.println("Sequence exists.");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -119,6 +126,7 @@ public class DBInteraction {
     public void removeTable() {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP TABLE USERS");
+            statement.executeUpdate("DROP TABLE WORKERS");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -152,5 +160,21 @@ public class DBInteraction {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public boolean sequenceDoesntExist(String sequenceName) {
+        try {
+            DatabaseMetaData meta = connection.getMetaData();
+            ResultSet rs = meta.getTables(null, null, null, new String[]{"SEQUENCE"});
+            while (rs.next()) {
+                if (rs.getString("TABLE_NAME").equals(sequenceName)){
+                    System.out.println("FOUND " + rs.getString("TABLE_NAME"));
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            Server.logger.error(ex.getMessage());
+        }
+        return true;
     }
 }

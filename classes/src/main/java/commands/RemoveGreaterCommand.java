@@ -16,8 +16,6 @@ public class RemoveGreaterCommand extends Command<Worker> implements Serializabl
         try {
             checkAuthorization(user.isAuthorized());
             int count_before = collection.size();
-            //if (collection.stream().noneMatch(worker -> argument.getArgument().compareTo(worker) < 0))
-            //    throw new Exception("There is no workers greater. Nothing to remove.");
 
             dbInteractionCommands.removeGreater(argument.getArgument().getName());
             dbInteractionCommands.updateCollection(collection);
@@ -25,7 +23,7 @@ public class RemoveGreaterCommand extends Command<Worker> implements Serializabl
             if (count_after < count_before)
                 this.setMessage("The elements are removed.");
             else
-                this.setMessage("There is no workers greater. Nothing to remove.");
+                this.setMessage("There is no workers greater or access restricted. Nothing to remove.");
         } catch (Exception e) {
             this.setMessage(e.getMessage());
         }

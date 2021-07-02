@@ -20,10 +20,6 @@ public class ShowCommand extends Command<Integer> implements Serializable {
                 dbInteractionCommands.updateCollection(collection);
                 for (Worker w : collection)
                     message += "creator: " + dbInteractionCommands.getCreator(w.getId()) + "\t\t" + w + "\n";
-
-                //AtomicReference<String> message = new AtomicReference<>("");
-                //collection.forEach(worker -> message.updateAndGet(v -> v + worker));
-                //this.setMessage(message.get());
             }
         } catch (Exception ex) {
             this.setMessage(ex.getMessage());

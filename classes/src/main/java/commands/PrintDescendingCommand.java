@@ -4,6 +4,8 @@ import arguments.Argument;
 import content.Worker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class PrintDescendingCommand extends Command<Integer> implements Serializable {
@@ -14,20 +16,13 @@ public class PrintDescendingCommand extends Command<Integer> implements Serializ
     @Override
     public void execute(LinkedList<Worker> collection) {
         try {
-            String message = "";
             checkAuthorization(user.isAuthorized());
             if (dbInteractionCommands.isEmpty())
                 throw new Exception("Collection is empty. Nothing to show.");
             else {
                 dbInteractionCommands.updateCollection(collection);
-
-                for (Worker w : collection)
-                    message += "creator: " + dbInteractionCommands.getCreator(w.getId()) + "\t\t" + w;
-
-                ///AtomicReference<String> message = new AtomicReference<>("");
-                ///LinkedList<Worker> printList = new LinkedList<>(collection);
-                ///printList.stream().sorted(Comparator.reverseOrder()).forEach(worker -> message.updateAndGet(v -> v + worker));
-                this.setMessage(message);
+                LinkedList<Worker> printList = new LinkedList<>(collection);
+                printList.stream().sorted(Comparator.reverseOrder()).forEach(w -> message += ("creator: " + dbInteractionCommands.getCreator(w.getId()) + "\t\t" + w + '\n'));
             }
         } catch (Exception ex) {
             this.setMessage(ex.getMessage());

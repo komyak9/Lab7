@@ -18,7 +18,7 @@ public class UpdateIdCommand extends Command<Integer> implements Serializable {
             checkAuthorization(user.isAuthorized());
 
             if (collection.stream().noneMatch(worker -> worker.getId() == argument.getArgument()))
-                throw new Exception("There is no worker with such id. Nothing to update.");
+                throw new Exception("There is no worker with such id or access restricted. Nothing to update.");
 
             dbInteractionCommands.updateElement(argument.getArgument(), ((IdArgument) argument).getElement().getArgument().getName(),
                     (int) ((IdArgument) argument).getElement().getArgument().getCoordinates().getX(),

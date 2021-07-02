@@ -30,7 +30,7 @@ public class CollectionManager {
     private void fillCollection() {
         try (Statement statement = dbInteraction.getConnection().createStatement();
              ResultSet rs = statement.executeQuery("SELECT creator, id, name, coordinatesX, coordinatesY," +
-                     "creationDate, salary, startDate, endDate, position, organizationAnnualTurnover," +
+                     "creationDate, salary, startDate, endDate, position, organizationAnnualTurnover, " +
                      "organizationType, addressZipCode, locationX, locationY, locationName from WORKERS")) {
             FieldsWrapper wrapper = new FieldsWrapper();
             while (rs.next()) {
@@ -69,6 +69,7 @@ public class CollectionManager {
             Server.logger.info("Data from the database was successfully downloaded.");
         } catch (Exception ex) {
             Server.logger.warn(ex.getMessage());
+            System.exit(0);
         }
     }
 }

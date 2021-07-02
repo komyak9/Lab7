@@ -44,7 +44,7 @@ public class DBInteractionCommands implements Serializable {
             endDateString = new SimpleDateFormat("dd/MM/yyyy").format(endDate);
         Statement statement = connection.createStatement();
 
-        ResultSet rs = statement.executeQuery("SELECT nextval('idGenerator') as idd");
+        ResultSet rs = statement.executeQuery("SELECT nextval('IDGENR') as idd");
         int idS = 0;
         if (rs.next())
             idS = rs.getInt("idd");

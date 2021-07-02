@@ -17,8 +17,6 @@ public class RemoveAllByPositionCommand extends Command<Position> implements Ser
         try {
             checkAuthorization(user.isAuthorized());
             int count_before = collection.size();
-            //if (collection.stream().noneMatch(worker -> worker.getPosition().equals(argument.getArgument())))
-            //    throw new Exception("There is no worker with such position. Nothing to remove.");
 
             dbInteractionCommands.removePosition(argument.getArgument());
             dbInteractionCommands.updateCollection(collection);
@@ -26,7 +24,7 @@ public class RemoveAllByPositionCommand extends Command<Position> implements Ser
             if (count_after < count_before)
                 this.setMessage("The elements are removed.");
             else
-                this.setMessage("There is no worker with such salary. Nothing to remove.");
+                this.setMessage("There is no worker with such position or access restricted. Nothing to remove.");
         } catch (Exception e) {
             this.setMessage(e.getMessage());
         }

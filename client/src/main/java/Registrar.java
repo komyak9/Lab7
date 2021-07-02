@@ -7,7 +7,7 @@ public class Registrar {
     private User user;
 
     public Registrar() throws Exception {
-        System.out.print("Do you want to register? \"yes\" for yes and anything for no");
+        System.out.print("Do you want to register? \"yes\" for yes and anything for no: ");
         if (sc.nextLine().equals("yes"))
             register();
         else

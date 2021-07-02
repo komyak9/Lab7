@@ -21,7 +21,7 @@ public class Client {
         while (scanning && toContinue) {
             if (System.currentTimeMillis() - start >= 100000) {
                 Scanner sc = new Scanner(System.in);
-                System.out.println("Do you want to continue waiting? \"no\" for no, anything for yes");
+                System.out.println("Do you want to continue waiting? \"no\" for no, anything for yes: ");
                 String decision = sc.nextLine();
                 if (decision.equals("no")) {
                     toContinue = false;
