@@ -25,7 +25,7 @@ public class RemoveByIdCommand extends Command<Integer> implements Serializable 
             if (count_after < count_before)
                 this.setMessage("The elements are removed.");
             else
-                this.setMessage("There is no worker with such id. Nothing to remove.");
+                this.setMessage("There is no worker with such id or you have no access. Nothing removed.");
         } catch (Exception e) {
             this.setMessage(e.getMessage());
         }

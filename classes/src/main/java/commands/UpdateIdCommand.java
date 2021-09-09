@@ -36,7 +36,7 @@ public class UpdateIdCommand extends Command<Integer> implements Serializable {
                     ((IdArgument) argument).getElement().getArgument().getOrganization().getOfficialAddress().getTown().getName());
 
             dbInteractionCommands.updateCollection(collection);
-            this.setMessage("The worker is replaced successfully.");
+            this.setMessage("The worker was replaced if you created it. Check by \"show\".");
         } catch (Exception ex) {
             this.setMessage(ex.getMessage());
         }

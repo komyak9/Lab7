@@ -18,7 +18,6 @@ public class HelpCommand extends Command<Integer> implements Serializable {
         commands.put("update", "Update an element with the given id");
         commands.put("remove_by_id", "Remove an elements with the given id");
         commands.put("clear", "Remove all the elements of the collection");
-        commands.put("execute_script", "Read the file and do the script");
         commands.put("exit", "Finish the program");
         commands.put("add_if_max", "Add a new element if it has the highest value");
         commands.put("add_if_min", "Add a new element if it has the lowest value");
