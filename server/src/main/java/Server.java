@@ -11,7 +11,6 @@ import java.util.concurrent.Semaphore;
 public class Server {
     public static final Logger logger = LoggerFactory.getLogger(Server.class);
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
-    private final Semaphore semaphore = new Semaphore(1000);
     private ServerSocket serverSocket;
     private final int PORT = 3175;
     //DBInteraction dbInteraction = new DBInteraction("jdbc:postgresql://localhost:5432/postgres", "postgres", "labpass");
@@ -37,14 +36,16 @@ public class Server {
     public void run() {
         try {
             while (true) {
-                semaphore.acquire();
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection accepted.");
-                executorService.submit(new ConnectionHandler(this, socket, collectionManager));
+                executorService.submit(new ConnectionHandler(socket, collectionManager));
             }
         } catch (Exception ex) {
             logger.warn(ex.getMessage());
 
+        }
+        finally{
+            executorService.shutdown();
         }
     }
 }

@@ -16,16 +16,14 @@ public class Client {
         host = hostage;
         port = socketPort;
         boolean scanning = true;
-        boolean toContinue = true;
         long start = System.currentTimeMillis();
-        while (scanning && toContinue) {
+        while (scanning) {
             if (System.currentTimeMillis() - start >= 100000) {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Do you want to continue waiting? \"no\" for no, anything for yes: ");
                 String decision = sc.nextLine();
                 if (decision.equals("no")) {
-                    toContinue = false;
-                    return toContinue;
+                    return false;
                 }
                 start = System.currentTimeMillis();
             }

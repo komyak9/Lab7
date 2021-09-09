@@ -5,12 +5,10 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ConnectionHandler implements Runnable {
-    private final Server server;
     private final Socket socket;
     private final CollectionManager collectionManager;
 
-    public ConnectionHandler(Server server, Socket socket, CollectionManager collectionManager) {
-        this.server = server;
+    public ConnectionHandler(Socket socket, CollectionManager collectionManager) {
         this.socket = socket;
         this.collectionManager = collectionManager;
     }
@@ -27,6 +25,7 @@ public class ConnectionHandler implements Runnable {
             } while (command.getClass() != ExitCommand.class);
         } catch (Exception exception) {
             Server.logger.error(exception.getMessage());
+            Server.logger.info("A client is closed. Waiting for other clients...");
         }
     }
 }

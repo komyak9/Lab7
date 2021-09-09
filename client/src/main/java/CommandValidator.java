@@ -42,13 +42,6 @@ public class CommandValidator {
                 case "clear":
                     command = new ClearCommand(null);
                     break;
-                case "execute_script":
-                    if (filesList.contains(input[1]))
-                        throw new Exception("Such script is currently being executed.");
-                    filesList.add(input[1]);
-                    readCommands.readCommands(input[1]);
-                    filesList.remove(input[1]);
-                    break;
                 case "exit":
                     command = new ExitCommand(null);
                     break;

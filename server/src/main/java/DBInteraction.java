@@ -57,14 +57,12 @@ public class DBInteraction {
                 Server.logger.info("The table WORKERS created successfully.");
             }
 
-            if (sequenceDoesntExist("IDGENR")){
+            if (sequenceDoesntExist("idgenr")){
                 statement = connection.createStatement();
                 statement.executeUpdate("CREATE SEQUENCE IDGENR START 1");
                 statement.close();
                 Server.logger.info("The sequence IDGENR created successfully.");
             }
-            else
-                System.out.println("Sequence exists.");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -150,7 +148,7 @@ public class DBInteraction {
                 result = "New user created and authorized successfully!";
                 user.setAuthorized(true);
             } else
-                result = "Sorry, such user has already exists.";
+                result = "Sorry, such user already exists.";
 
         } catch (SQLException ex) {
             Server.logger.warn(ex.getMessage());
@@ -167,10 +165,8 @@ public class DBInteraction {
             DatabaseMetaData meta = connection.getMetaData();
             ResultSet rs = meta.getTables(null, null, null, new String[]{"SEQUENCE"});
             while (rs.next()) {
-                if (rs.getString("TABLE_NAME").equals(sequenceName)){
-                    System.out.println("FOUND " + rs.getString("TABLE_NAME"));
+                if (rs.getString("TABLE_NAME").equals(sequenceName))
                     return false;
-                }
             }
         } catch (SQLException ex) {
             Server.logger.error(ex.getMessage());
